@@ -2,6 +2,8 @@ import WebSocket, { WebSocketServer } from 'ws';
 import moveMouse from './modules/moveMouse';
 import getCoordinates from './modules/getCoordinates';
 import drawCircle from './modules/drawCircle';
+import drawRectangle from './modules/drawRectangle'
+import takeScreenshot from './modules/takeScreenshot';
 const wss = new WebSocketServer({ port: 8080 });
 // const duplex = WebSocket.createWebSocketStream(wss, { encoding: 'utf8' });
 
@@ -9,12 +11,14 @@ const wss = new WebSocketServer({ port: 8080 });
 // process.stdin.pipe(duplex);
 wss.on('connection', function connection(ws) {
   const s = WebSocket.createWebSocketStream(ws, { encoding: 'utf8', autoDestroy: false,  decodeStrings: false });
-  s.on('data', (data: any) => {
+  s.on('data', async (data: any) => {
     // console.log('received: %s', data);
     // s.write(`${data}`, 'utf-8');
     // moveMouse(data.split(/_| /)[1], parseInt(data.split(' ')[1]));
     // s.write(getCoordinates(), 'utf-8');
-    drawCircle(50);
+    // drawCircle(50);
+    // drawRectangle(parseInt(data.split(' ')[1]),parseInt(data.split(' ')[2]) )
+    s.write(await takeScreenshot(), 'utf-8');
   });
   // ws.on('message', function message(data) {
   //   // robot.setMouseDelay(2);
