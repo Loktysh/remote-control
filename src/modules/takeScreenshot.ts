@@ -2,18 +2,23 @@ import robot from 'robotjs';
 import Jimp from 'jimp/es';
 
 const takeScreenshot = async () => {
-  // setTimeout(() => {
-  //   let { x, y } = robot.getMousePos();
-  //   robot.mouseToggle('down');
-  //   robot.moveMouseSmooth(x + width, y);
-  //   robot.moveMouseSmooth(x + width, y + height);
-  //   robot.moveMouseSmooth(x, y + height);
-  //   robot.moveMouseSmooth(x, y);
-  //   robot.mouseToggle('up');
-  // }, 3000);
-  let capture = robot.screen.capture(0, 0, 200, 200);
+  const { x, y } = robot.getMousePos();
+  let capture = robot.screen.capture(x - 100, y - 100, 200, 200);
   let image = new Jimp(200, 200);
-  image.bitmap.data = capture.image;
+  let red: number, green: number, blue: number;
+  capture.image.forEach((byte: number, i: number) => {
+    switch (i % 4) {
+      case 0: return blue = byte
+      case 1: return green = byte
+      case 2: return red = byte
+      case 3: 
+        image.bitmap.data[i - 3] = red
+        image.bitmap.data[i - 2] = green
+        image.bitmap.data[i - 1] = blue
+        image.bitmap.data[i] = 255
+    }
+  })
+  // image.bitmap.data = capture.image;
   const base64 = await image.getBufferAsync(Jimp.MIME_PNG);
   console.log(base64);
   return `prnt_scrn ${base64.toString('base64')}`;
