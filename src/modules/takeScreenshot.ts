@@ -20,7 +20,6 @@ const takeScreenshot = async () => {
   })
   // image.bitmap.data = capture.image;
   const base64 = await image.getBufferAsync(Jimp.MIME_PNG);
-  console.log(base64);
   return `prnt_scrn ${base64.toString('base64')}`;
 };
 

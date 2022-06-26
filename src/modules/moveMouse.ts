@@ -16,7 +16,8 @@ const moveMouse = (direction: string, value: number) => {
     x += value;
   }
   if (x > 0 && y > 0) {
-    robot.moveMouseSmooth(x,y)
+    robot.moveMouseSmooth(x, y)
+    return (`mouse_${direction} ${direction === 'up' || direction === 'down' ? y : x}`);
   }
 } 
 export default moveMouse;

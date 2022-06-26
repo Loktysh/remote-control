@@ -11,7 +11,7 @@ const drawCircle = (radius: number) => {
       robot.dragMouse(xn, yn);
     }
     robot.mouseToggle('up');
-  }, 3000);
+  }, 1000);
 };
 
 export default drawCircle;
